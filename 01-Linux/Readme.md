@@ -201,17 +201,17 @@ The shebangs are command sequences to make a file executable. The meaning of “
 
 3. Download using ``wget`` the [*bsds500*](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html#bsds500) image segmentation database, and decompress it using ``tar`` (keep it in you hard drive, we will come back over this data in a few weeks).
 
-vision@bcv002:~/na.duran$ wget http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz
-vision@bcv002:~/na.duran$ tar -xzvf BSR_bsds500.tgz [4]
+``vision@bcv002:~/na.duran$ wget http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz
+vision@bcv002:~/na.duran$ tar -xzvf BSR_bsds500.tgz [4]``
 
  
 4. What is the disk size of the uncompressed dataset, How many images are in the directory 'BSR/BSDS500/data/images'?
 
 The disk size of the uncompressed data set is 74128 kb. [5]
-vision@bcv002:~/na.duran$ du BSR
+``vision@bcv002:~/na.duran$ du BSR``
 
 Number of imagens (In view of the fact that all images are in format.jpg)
-vision@bcv002:~/na.duran/BSR/BSDS500/data/images$ find . -name "*.jpg" | wc –l
+``vision@bcv002:~/na.duran/BSR/BSDS500/data/images$ find . -name "*.jpg" | wc –l``
 
 Number of imagens: 500 (200 in train, 200 in test and 100 in val).
 
@@ -220,11 +220,11 @@ Number of imagens: 500 (200 in train, 200 in test and 100 in val).
 
 5.	The resolutions are 321X481 and 481X321
 
-vision@bcv002:~/na.duran/BSR/BSDS500/data/images$ find . -name "*.jpg" -exec identify {} \; | awk '{print $3}' | sort | uniq   
+``vision@bcv002:~/na.duran/BSR/BSDS500/data/images$ find . -name "*.jpg" -exec identify {} \; | awk '{print $3}' | sort | uniq  `` 
 
 Their format is JPEG. 
 
-vision@bcv002:~/na.duran/BSR/BSDS500/data/images$ find . -name "*.jpg" -exec identify {} \; | awk '{print $2}' | sort | uniq   
+``vision@bcv002:~/na.duran/BSR/BSDS500/data/images$ find . -name "*.jpg" -exec identify {} \; | awk '{print $2}' | sort | uniq ``  
 
 
 
@@ -236,6 +236,44 @@ There are 348 landscape images and 152 portrait images.
 
  
 7. Crop all images to make them square (256x256) and save them in a different folder. Tip: do not forget about  [imagemagick](http://www.imagemagick.org/script/index.php).
+
+```#!/bin/bash
+
+
+
+# remove the folder created by a previous run from the script
+rm -rf cut_images
+
+# create output directory
+mkdir cut_images
+
+# copy all files whose name end in .jpg to the new directory
+cp -r $(find . -name "*.jpg") / cut_images
+
+# find all files whose name end in .jpg
+images=$(find cut_images -name *.jpg)
+#iterate over them
+for im in ${images[*]}
+do
+# http://ask.xmodulo.com/crop-image-command-line-linux.html
+# image = $(identify $im | awk '{print $1}'
+# convert image -crop 256x256+0+0 image
+ 
+ #Crop all the images in a square of 256x256
+ convert $im -crop 256x256+0+0 $im 
+done```
+
+
+References
+[1] https://www.interserver.net/tips/kb/linux-grep-command-usage-examples/
+
+[2]https://www.thegeekstuff.com/2009/03/15-practical-unix-grep-command-examples/
+
+[3] https://martin-thoma.com/what-does-usrbinpython-mean/
+
+[4] http://ecapy.com/comprimir-y-descomprimir-tgz-tar-gz-y-zip-por-linea-de-comandos-en-linux/index.html
+
+[5] https://www.keopx.net/blog/uso-de-du-para-saber-el-tamano-de-las-carpetas
 
 
 # Report
