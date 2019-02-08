@@ -115,19 +115,19 @@ See [here](ssh.md) for different types of SSH connection with respect to your OS
 
 1. Create a folder with your Uniandes username. (If you don't have Linux in your personal computer)
 
-vision@bcv002:~ mkdir na.duran
+``vision@bcv002:~ mkdir na.duran``
 
 2. Copy *sipi_images* folder to your personal folder. (If you don't have Linux in your personal computer)
 
-vision@bcv002:~$ cp -R data/sipi_images/ na.duran/
+``vision@bcv002:~$ cp -R data/sipi_images/ na.duran/``
 
 3.  Decompress the images (use ``tar``, check the man) inside *sipi_images* folder. 
 
-	http://ecapy.com/comprimir-y-descomprimir-tgz-tar-gz-y-zip-por-linea-de-comandos-en-linux/index.html
-a.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf aerials.tar.gz
+	``http://ecapy.com/comprimir-y-descomprimir-tgz-tar-gz-y-zip-por-linea-de-comandos-en-linux/index.html``
+``a.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf aerials.tar.gz
 b.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf misc.tar.gz
 c.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf sequences.tar.gz
-d.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf textures.tar.gz
+d.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf textures.tar.gz``
 
 
 4.  Use  ``imagemagick`` to find all *grayscale* images. We first need to install the *imagemagick* package by typing
@@ -143,7 +143,9 @@ d.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf textures.tar.gz
     ```bash
     find . -name "*.tiff" -exec identify {} \; | grep -i gray | wc -l
     ```
-    	159 grayscale images in total.
+    
+    	There are 159 grayscale images in total.
+	
     
 5.  Create a script to copy all *color* images to a different folder
     Lines that start with # are comments
@@ -184,45 +186,62 @@ d.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf textures.tar.gz
       -  make executable ``chmod u+x`` (This means add Execute permission for the user)
       -  run ``./find_duplicates.sh`` (The dot is necessary to run a program in the current directory)
       
-       vision@bcv002:~/na.duran/sipi_images$ nano
-       vision@bcv002:~/na.duran/sipi_images$ chmod u+x find_colors_images.sh
-        vision@bcv002:~/na.duran/sipi_images$ ./find_colors_images.sh
+       ``vision@bcv002:~/na.duran/sipi_images$ nano``
+        
+        ``vision@bcv002:~/na.duran/sipi_images$ chmod u+x find_colors_images.sh
+        vision@bcv002:~/na.duran/sipi_images$ ./find_colors_images.sh``
 
 ## Your turn
 
 1. What is the ``grep``command?
 
+
 The grep command is used to search text, because it process line by line of a text and prints the lines that match a specified pattern. Therefore, it can search lines of text that match with the regular expressions specified.  The syntax of the command is:  grep “string” FILE_PATTERN. In addition, it can be used grep –i to case insensitive search. [1] [2]
 
 
+
 2. What is the meaning of ``#!/bin/python`` at the start of scripts?
+
+
 The shebangs are command sequences to make a file executable. The meaning of “#!/bin/Python” at the start of the scripts is for interpret how execute a script via Python. [3]
+
 
 
 3. Download using ``wget`` the [*bsds500*](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html#bsds500) image segmentation database, and decompress it using ``tar`` (keep it in you hard drive, we will come back over this data in a few weeks).
 
+
 ``vision@bcv002:~/na.duran$ wget http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz
 vision@bcv002:~/na.duran$ tar -xzvf BSR_bsds500.tgz [4]``
+
 
  
 4. What is the disk size of the uncompressed dataset, How many images are in the directory 'BSR/BSDS500/data/images'?
 
+
 The disk size of the uncompressed data set is 74128 kb. [5]
+
 ``vision@bcv002:~/na.duran$ du BSR``
 
+
 Number of imagens (In view of the fact that all images are in format.jpg)
+
 ``vision@bcv002:~/na.duran/BSR/BSDS500/data/images$ find . -name "*.jpg" | wc –l``
 
-Number of imagens: 500 (200 in train, 200 in test and 100 in val).
+
+Number of images: 500 (200 in train, 200 in test and 100 in val).
 
  
 5. What are all the different resolutions? What is their format? Tip: use ``awk``, ``sort``, ``uniq`` 
 
-5.	The resolutions are 321X481 and 481X321
+
+The resolutions are 321X481 and 481X321
+
 
 ``vision@bcv002:~/na.duran/BSR/BSDS500/data/images$ find . -name "*.jpg" -exec identify {} \; | awk '{print $3}' | sort | uniq  `` 
 
+
 Their format is JPEG. 
+
 
 ``vision@bcv002:~/na.duran/BSR/BSDS500/data/images$ find . -name "*.jpg" -exec identify {} \; | awk '{print $2}' | sort | uniq ``  
 
@@ -230,14 +249,18 @@ Their format is JPEG.
 
 6. How many of them are in *landscape* orientation (opposed to *portrait*)? Tip: use ``awk`` and ``cut``
 
-In this case, the images with resolution of 481X321 are landscape and the others (321X481) are portrait.  
+
+In this case, the images with resolution of 481X321 are landscape and the others (321X481) are portrait. 
+
 ``find . -name "*.jpg" -exec identify {} \; | awk '{print $3}' |grep  "481x321" | wc –l``
+
 There are 348 landscape images and 152 portrait images. 
 
  
 7. Crop all images to make them square (256x256) and save them in a different folder. Tip: do not forget about  [imagemagick](http://www.imagemagick.org/script/index.php).
 
-```#!/bin/bash
+
+``#!/bin/bash
 
 
 
@@ -261,17 +284,22 @@ do
  
  #Crop all the images in a square of 256x256
  convert $im -crop 256x256+0+0 $im 
-done```
+done``
+
 
 
 References
 [1] https://www.interserver.net/tips/kb/linux-grep-command-usage-examples/
 
+
 [2]https://www.thegeekstuff.com/2009/03/15-practical-unix-grep-command-examples/
+
 
 [3] https://martin-thoma.com/what-does-usrbinpython-mean/
 
+
 [4] http://ecapy.com/comprimir-y-descomprimir-tgz-tar-gz-y-zip-por-linea-de-comandos-en-linux/index.html
+
 
 [5] https://www.keopx.net/blog/uso-de-du-para-saber-el-tamano-de-las-carpetas
 
