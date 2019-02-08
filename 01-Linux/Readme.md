@@ -290,11 +290,13 @@ do
  
  #Crop all the images in a square of 256x256
  convert $im -crop 256x256+0+0 $im 
-done```
+done
+```
 
 
 
-References
+# References
+
 [1] https://www.interserver.net/tips/kb/linux-grep-command-usage-examples/
 
 
