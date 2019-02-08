@@ -124,10 +124,14 @@ See [here](ssh.md) for different types of SSH connection with respect to your OS
 3.  Decompress the images (use ``tar``, check the man) inside *sipi_images* folder. 
 
 	``http://ecapy.com/comprimir-y-descomprimir-tgz-tar-gz-y-zip-por-linea-de-comandos-en-linux/index.html``
-``a.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf aerials.tar.gz
-b.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf misc.tar.gz
-c.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf sequences.tar.gz
-d.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf textures.tar.gz``
+	
+	```a.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf aerials.tar.gz```
+	
+	```b.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf misc.tar.gz```
+	
+	```c.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf sequences.tar.gz```
+	
+	```d.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf textures.tar.gz```
 
 
 4.  Use  ``imagemagick`` to find all *grayscale* images. We first need to install the *imagemagick* package by typing
@@ -188,8 +192,9 @@ d.	vision@bcv002:~/na.duran/sipi_images$ tar -xzvf textures.tar.gz``
       
        ``vision@bcv002:~/na.duran/sipi_images$ nano``
         
-        ``vision@bcv002:~/na.duran/sipi_images$ chmod u+x find_colors_images.sh
-        vision@bcv002:~/na.duran/sipi_images$ ./find_colors_images.sh``
+        ``vision@bcv002:~/na.duran/sipi_images$ chmod u+x find_colors_images.sh``
+	
+       `` vision@bcv002:~/na.duran/sipi_images$ ./find_colors_images.sh``
 
 ## Your turn
 
@@ -210,8 +215,9 @@ The shebangs are command sequences to make a file executable. The meaning of “
 3. Download using ``wget`` the [*bsds500*](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html#bsds500) image segmentation database, and decompress it using ``tar`` (keep it in you hard drive, we will come back over this data in a few weeks).
 
 
-``vision@bcv002:~/na.duran$ wget http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz
-vision@bcv002:~/na.duran$ tar -xzvf BSR_bsds500.tgz [4]``
+``vision@bcv002:~/na.duran$ wget http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz``
+
+``vision@bcv002:~/na.duran$ tar -xzvf BSR_bsds500.tgz [4]``
 
 
  
@@ -260,7 +266,7 @@ There are 348 landscape images and 152 portrait images.
 7. Crop all images to make them square (256x256) and save them in a different folder. Tip: do not forget about  [imagemagick](http://www.imagemagick.org/script/index.php).
 
 
-``#!/bin/bash
+```#!/bin/bash
 
 
 
@@ -284,7 +290,7 @@ do
  
  #Crop all the images in a square of 256x256
  convert $im -crop 256x256+0+0 $im 
-done``
+done```
 
 
 
