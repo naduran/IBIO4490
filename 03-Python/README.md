@@ -51,6 +51,8 @@ Bonus:
 - I could contemplate the posibility of a bonus if someone does not use the BDSD dataset. Be creative.
 
 # Solution
+
+The scritp is in the folder 03-Python of my repository (run.py)
 ```
 #! /usr/bin/python
 import time
