@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from numpy.fft import fft2, ifft2, fftshift, ifftshift
 import math
+import subprocess
 from scipy import ndimage as ndi
 from scipy import misc
 from PIL import Image, ImageFilter
@@ -61,13 +62,13 @@ def hybridImage(highFreqImg, lowFreqImg, sigmaHigh, sigmaLow):
 
 img=mpimg.imread('P2.jpeg')
 plt.axis("off")
-plt.imshow(img)
-plt.show()
+#plt.imshow(img)
+#plt.show()
 
 img=cv2.imread('P1.jpeg')
 plt.axis("off")
-plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-plt.show()
+#plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+#plt.show()
 
 #img1=cv2.imread('P1.jpeg',0)
 #img1=highFilter(img1,9)
@@ -101,7 +102,6 @@ img1=ndi.imread('P1.jpeg', flatten=True)
 img2=ndi.imread('P2.jpeg', flatten=True)
 img=hybridImage(img1,img2,15,15)
 misc.imsave("hibrida_filtros.jpeg", np.real(img))
-
 imgh=cv2.imread('hibrida_filtros.jpeg')
 plt.axis("off")
 plt.imshow(cv2.cvtColor(imgh, cv2.COLOR_BGR2RGB))
