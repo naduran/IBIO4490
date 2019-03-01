@@ -57,30 +57,34 @@ The scritp is in the folder 03-Python of my repository (run.py)
 #! /usr/bin/python
 import time
 tic=time.clock()
-import os, cv2, random, shutil
+import os,random, shutil
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import subprocess
 # vision@bcv002:~/na.duran/IBIO4490/03-Python$
-
-
+try:
+    import cv2
+except ImportError:
+    subprocess.call(['pip','install','opencv-contrib-python'])
+    import cv2
+directory=os.listdir(os.getcwd())
 #Download original dataset[:D (creativity!)]. It has 30 images of horses, cats and owls. The name has the annotations.
 #os.system("rm Dataset\ animales-20190214T131444Z-001.zip")
 #os.system("rm -rf Dataset\ animales/")
-if os.path.isdir('/media/disk1/vision/na.duran/IBIO4490/03-Python/show_im/') is True: 
+if 'show_im' in directory:
    os.system("rm -rf show_im")
  #Condition to skip step 1
-if os.path.isdir('/media/disk1/vision/na.duran/IBIO4490/03-Python/Dataset animales/') is False: 
+if 'Dataset animales'not in directory: 
 #Scritp developed with help of: https://www.kaggle.com/deadskull7/cats-vs-dogs-images
  
     os.system('curl gdrive.sh | bash -s 1wKpuUXbe7OnjxMYyG8r2OFMmpmixaATi')
 #https://drive.google.com/file/d/1wKpuUXbe7OnjxMYyG8r2OFMmpmixaATi/view?usp=sharing
 
     os.system('unzip Dataset\ animales-20190214T131444Z-001.zip')
-
-py='/media/disk1/vision/na.duran/IBIO4490/03-Python/'
-show_im='/media/disk1/vision/na.duran/IBIO4490/03-Python/show_im/'
+py=os.getcwd()
+show_im=py+ '/'+'show_im'+'/'
     
     #Erase images saved in the last run
 for file in os.listdir(py):
@@ -90,13 +94,14 @@ for file in os.listdir(py):
 
 
     
-data_dir='/media/disk1/vision/na.duran/IBIO4490/03-Python/Dataset animales/'
+data_dir=py+'/'+'Dataset animales'+'/'
 #List with the path of each image in dataset
-data = [data_dir+i for i in os.listdir('/media/disk1/vision/na.duran/IBIO4490/03-Python/Dataset animales/') if 'jpg' in i]
+data = [data_dir+i for i in os.listdir(data_dir) if 'jpg' in i]
 #Number of images to show choosed randomly
-N=random.randint(0,len(data))
+N=random.randrange(2,len(data),2)
+
 #List to choose random images of data set
-l=random.sample(xrange(0,len(data)-1),N)
+l=random.sample(range(0,len(data)-1),N)
 count=0
 rand_data=N*[1]
 for c in l:
@@ -125,8 +130,8 @@ for n in os.listdir(py):
     #os.system("rm n")
     img = img.resize((256,256))
     draw = ImageDraw.Draw(img)
-    #Problem with font
-    font = ImageFont.load_default
+    #Problem with font. I had to use fc-list to find 'Latom-Medium.ttf'
+    font = ImageFont.truetype('Lato-Medium.ttf', 50)
     
     if 'c' in n:
       m="cat"
@@ -148,17 +153,22 @@ for filename in os.listdir(py):
  #Creates a list of the images resized with labels in the folder      
 show=[show_im+i for i in os.listdir(show_im) if 'jpg' in i]
 #Plot the images together.
-for n in os.listdir(show_im):
-  img = Image.open(n)
-  pair = (np.concatenate(img))  
-  plt.figure(figsize=(50,50))
-  plt.imshow(pair)
-  plt.show()      
-#Remove the folder
-os.system("rm -rf show_im")
+plt.figure(1)
+for i in range (0,N):
+     im=mpimg.imread(show[i])
+     plt.subplot(2,N/2,i+1) 
+     plt.axis('off')
+     plt.imshow(im)
+     plt.subplots_adjust(wspace=0, hspace=0)
 #Take the time of processing and print it in the terminal
 toc=time.clock()
 print(toc-tic) #>5.66 s without download the data.
+plt.show()
+    
+#Remove the folder
+os.system("rm -rf show_im")
+
+
 
 #References 
 #[1] https://www.kaggle.com/deadskull7/cats-vs-dogs-images
@@ -181,7 +191,7 @@ print(toc-tic) #>5.66 s without download the data.
 #tf.extractall()
 
 #tf = tarfile.open("beaver.tar.gz")
-#tf.extractall() 
+#tf.extractall()
     
 
  ```
